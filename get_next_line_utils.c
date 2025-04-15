@@ -1,13 +1,33 @@
+#include "get_next_line.h"
 
-
-unsigned int ft_strlen(const char *str)
+void    ft_putchr(int c)
 {
-    unsigned int    i;
+    write(1, &c, 1);
+}
+
+size_t ft_strlen(const char *str)
+{
+    size_t    i;
 
     i = 0;
     while (str[i] != '\0')
         i++;
     return (i);
+}
+
+void    ft_putstr(const char *str)
+{
+    size_t  len;
+    size_t  i;
+
+    if (!str)
+        return;
+    len = ft_strlen(str);
+    while (i < len - 1 && str[i] != '\0')
+    {
+        ft_putchr(str[i]);
+        i++;
+    }
 }
 
 char    *ft_strchr(const char *str, int c)
@@ -26,9 +46,9 @@ char    *ft_strchr(const char *str, int c)
     return (0);
 }
 
-char    *ft_strlcpy(char *dest, const char *src, unsigned long long destsize)
+char    *ft_strlcpy(char *dest, const char *src, size_t destsize)
 {
-    unsigned long long  i;
+    size_t  i;
 
     if (!dest && !src)
         return (ft_strlen(src));
@@ -47,7 +67,7 @@ char    *ft_strlcpy(char *dest, const char *src, unsigned long long destsize)
 char    *ft_strjoin(const char *s1, const char *s2)
 {
     char *str;
-    unsigned long long len;
+    size_t len;
 
     if (!s1 || !s2)
         return (NULL);
@@ -62,8 +82,8 @@ char    *ft_strjoin(const char *s1, const char *s2)
 char    *ft_strdup(const char *s)
 {
     char *str;
-    unsigned long long  len;
-    unsigned long long  i;
+    size_t  len;
+    size_t  i;
 
     if (!s || !str)
         return (NULL);
@@ -78,4 +98,3 @@ char    *ft_strdup(const char *s)
     str[i] = '\0';
     return (str);
 }
-
