@@ -1,10 +1,5 @@
 #include "get_next_line.h"
 
-void    ft_putchr(int c)
-{
-    write(1, &c, 1);
-}
-
 size_t ft_strlen(const char *str)
 {
     size_t    i;
@@ -13,21 +8,6 @@ size_t ft_strlen(const char *str)
     while (str[i] != '\0')
         i++;
     return (i);
-}
-
-void    ft_putstr(const char *str)
-{
-    size_t  len;
-    size_t  i;
-
-    if (!str)
-        return;
-    len = ft_strlen(str);
-    while (i < len - 1 && str[i] != '\0')
-    {
-        ft_putchr(str[i]);
-        i++;
-    }
 }
 
 char    *ft_strchr(const char *str, int c)
@@ -43,7 +23,7 @@ char    *ft_strchr(const char *str, int c)
             return (str[i]);
         i++;
     }
-    return (0);
+    return (NULL);
 }
 
 char    *ft_strlcpy(char *dest, const char *src, size_t destsize)
