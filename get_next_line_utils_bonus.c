@@ -1,13 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: armkrtch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/26 16:20:37 by armkrtch          #+#    #+#             */
+/*   Updated: 2025/04/26 16:24:28 by armkrtch         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line_bonus.h"
 
-size_t ft_strlen(const char *str)
+size_t	ft_strlen(const char *str)
 {
-    size_t    i;
+	size_t	i;
 
-    i = 0;
-    while (str[i] != '\0')
-        i++;
-    return (i);
+	i = 0;
+	while (str[i] != '\0')
+		i++;
+	return (i);
 }
 
 char	*ft_strchr(const char *s, int c)
@@ -47,21 +59,20 @@ char	*ft_strjoin(const char *s1, const char *s2)
 	return (res);
 }
 
-
-char    *ft_strndup(const char *s, size_t n)
+char	*ft_strndup(const char *s, size_t n)
 {
-    char *str;
-    size_t i;
+	char	*str;
+	size_t	i;
 
-    str = (char *)malloc(n + 2);
-    if (!str)
-        return (NULL);
-    i = 0;
-    while (i < n && s[i])
-    {
-        str[i] = s[i];
-        i++;
-    }
-    str[i] = '\0';
-    return (str);
+	str = (char *)malloc(n + 1);
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (i < n && s[i])
+	{
+		str[i] = s[i];
+		i++;
+	}
+	str[i] = '\0';
+	return (str);
 }

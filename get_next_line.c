@@ -1,8 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: armkrtch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/26 15:53:11 by armkrtch          #+#    #+#             */
+/*   Updated: 2025/04/26 16:10:54 by armkrtch         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
-
 static char	*ft_join_free(char *res, char *buff)
-{	
+{
 	char	*temp;
 
 	temp = ft_strjoin(res, buff);
@@ -10,91 +21,86 @@ static char	*ft_join_free(char *res, char *buff)
 	return (temp);
 }
 
-static char *ft_trim_buffer(char *buffer)
+static char	*ft_trim_buffer(char *buffer)
 {
-    char *newline;
-    char *rest;
-    
-    newline = ft_strchr(buffer, '\n');
-    if (!newline)
-    {
-        free(buffer);
-        return NULL;
-    }
+	char	*newline;
+	char	*rest;
 
-    rest = ft_strndup(newline + 1, ft_strlen(newline + 1));
-    free(buffer);
-    return rest;
+	newline = ft_strchr(buffer, '\n');
+	if (!newline)
+	{
+		free(buffer);
+		return (NULL);
+	}
+	rest = ft_strndup(newline + 1, ft_strlen(newline + 1));
+	free(buffer);
+	return (rest);
 }
 
-static char *ft_set_line(char *buffer)
+static char	*ft_set_line(char *buffer)
 {
-    int i;
+	int	i;
 
-    if (!buffer)
-        return (NULL);
-    i = 0;
-    while (buffer[i] && buffer[i] != '\n')
-        i++;
-    if (buffer[i] == '\n')
-        i++;
-
-    return ft_strndup(buffer, i);
+	if (!buffer)
+		return (NULL);
+	i = 0;
+	while (buffer[i] && buffer[i] != '\n')
+		i++;
+	if (buffer[i] == '\n')
+		i++;
+	return (ft_strndup(buffer, i));
 }
 
-static char    *ft_fill_line_buffer(int fd, char *str)
+static char	*ft_fill_line_buffer(int fd, char *str)
 {
-    char *buff;
-    ssize_t buff_read;
+	char	*buff;
+	ssize_t	buff_read;
 
-    if (!str)
-    {
-        str = malloc(1);
-        if (!str)
-            return (NULL);
-        str[0] = '\0';
-    }
-    buff = malloc(BUFFER_SIZE + 1);
-    if (!buff)
-        return (NULL);
-    buff_read = 1;
-    while ((!str || !ft_strchr(str, '\n')) && buff_read > 0)
-    {
-        buff_read = read(fd, buff, BUFFER_SIZE);
-        if (buff_read == -1)
-        {
-            free(buff);
-            return (NULL);
-        }
-        else if (buff_read > 0)
-        {
-            buff[buff_read] = '\0';
-            str = ft_join_free(str, buff);
-        }
-    }
-    free(buff);
-    return (str);
+	if (!str)
+	{
+		str = malloc(1);
+		if (!str)
+			return (NULL);
+		str[0] = '\0';
+	}
+	buff = malloc(BUFFER_SIZE + 1);
+	if (!buff)
+		return (NULL);
+	buff_read = 1;
+	while ((!str || !ft_strchr(str, '\n')) && buff_read > 0)
+	{
+		buff_read = read(fd, buff, BUFFER_SIZE);
+		if (buff_read < 0)
+		{
+			free(buff);
+			return (NULL);
+		}
+		buff[buff_read] = '\0';
+		str = ft_join_free(str, buff);
+	}
+	free(buff);
+	return (str);
 }
 
-char    *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
-    static char *buffer;
-    char *line;
-    
-    if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
-    {
-        free(buffer);
-        buffer = NULL;
-        return (NULL);
-    }
-    buffer = ft_fill_line_buffer(fd, buffer);
-    if (!buffer || *buffer == '\0')
-    {
-        free(buffer);
-        buffer = NULL;
-        return NULL;
-    }
-    line = ft_set_line(buffer);
-    buffer = ft_trim_buffer(buffer);
-    return (line);
+	static char	*buffer;
+	char		*line;
+
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+	{
+		free(buffer);
+		buffer = NULL;
+		return (NULL);
+	}
+	buffer = ft_fill_line_buffer(fd, buffer);
+	if (!buffer || *buffer == '\0')
+	{
+		free(buffer);
+		buffer = NULL;
+		return (NULL);
+	}
+	line = ft_set_line(buffer);
+	buffer = ft_trim_buffer(buffer);
+	return (line);
 }
