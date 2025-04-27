@@ -6,7 +6,7 @@
 /*   By: armkrtch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 15:20:35 by armkrtch          #+#    #+#             */
-/*   Updated: 2025/04/26 15:51:24 by armkrtch         ###   ########.fr       */
+/*   Updated: 2025/04/27 19:15:46 by armkrtch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,12 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <fcntl.h>
+
+typedef struct s_buff
+{
+	char	*buff;
+	ssize_t	read_size;
+}	t_buff;
 
 size_t	ft_strlen(const char *str);
 char	*ft_strchr(const char *str, int c);

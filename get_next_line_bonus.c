@@ -6,11 +6,11 @@
 /*   By: armkrtch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 16:25:16 by armkrtch          #+#    #+#             */
-/*   Updated: 2025/04/26 16:34:03 by armkrtch         ###   ########.fr       */
+/*   Updated: 2025/04/27 19:17:32 by armkrtch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line_bonus.h"
+#include "get_next_line.h"
 
 static char	*ft_join_free(char *res, char *buff)
 {
@@ -53,8 +53,7 @@ static char	*ft_set_line(char *buffer)
 
 static char	*ft_fill_line_buffer(int fd, char *str)
 {
-	char	*buff;
-	ssize_t	buff_read;
+	t_buff	buff_data;
 
 	if (!str)
 	{
@@ -63,23 +62,22 @@ static char	*ft_fill_line_buffer(int fd, char *str)
 			return (NULL);
 		str[0] = '\0';
 	}
-	buff = malloc(BUFFER_SIZE + 1);
-	if (!buff)
+	buff_data.buff = malloc(BUFFER_SIZE + 1);
+	if (!buff_data.buff)
 		return (NULL);
-	buff_read = 1;
-	while ((!str || !ft_strchr(str, '\n')) && buff_read > 0)
+	buff_data.read_size = 1;
+	while (!ft_strchr(str, '\n') && buff_data.read_size > 0)
 	{
-		buff_read = read(fd, buff, BUFFER_SIZE);
-		if (buff_read == -1)
+		buff_data.read_size = read(fd, buff_data.buff, BUFFER_SIZE);
+		if (buff_data.read_size < 0)
 		{
-			free(buff);
+			free(buff_data.buff);
 			return (NULL);
 		}
-		buff[buff_read] = '\0';
-		str = ft_join_free(str, buff);
+		buff_data.buff[buff_data.read_size] = '\0';
+		str = ft_join_free(str, buff_data.buff);
 	}
-	free(buff);
-	return (str);
+	return (free(buff_data.buff), str);
 }
 
 char	*get_next_line(int fd)
