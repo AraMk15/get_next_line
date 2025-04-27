@@ -53,10 +53,9 @@ static char	*ft_set_line(char *buffer)
 
 static char	*ft_fill_line_buffer(int fd, char *str)
 {
-	char	**buff;
+	char	*buff;
 	ssize_t	buff_read;
 
-	buff = NULL;
 	if (!str)
 	{
 		str = malloc(1);
@@ -64,7 +63,7 @@ static char	*ft_fill_line_buffer(int fd, char *str)
 			return (NULL);
 		str[0] = '\0';
 	}
-	*buff = malloc(BUFFER_SIZE + 1);
+	buff = malloc(BUFFER_SIZE + 1);
 	if (!buff)
 		return (NULL);
 	buff_read = 1;
@@ -76,32 +75,32 @@ static char	*ft_fill_line_buffer(int fd, char *str)
 			free(buff);
 			return (NULL);
 		}
-		*buff[buff_read] = '\0';
-		str = ft_join_free(str, *buff);
+		buff[buff_read] = '\0';
+		str = ft_join_free(str, buff);
 	}
 	free(buff);
 	return (str);
 }
 
-char	*get_next_line_bonus(int fd)
+char	*get_next_line(int fd)
 {
-	static char	**buffer;
+	static char	*buffer[1024];
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 	{
-		free(*buffer);
-		buffer = NULL;
+		free(buffer[fd]);
+		buffer[fd] = NULL;
 		return (NULL);
 	}
-	*buffer = ft_fill_line_buffer(fd, *buffer);
-	if (!(*buffer) || **buffer == '\0')
+	*buffer = ft_fill_line_buffer(fd, buffer[fd]);
+	if (!buffer[fd])
 	{
-		free(*buffer);
-		*buffer = NULL;
+		free(buffer[fd]);
+		buffer[fd] = NULL;
 		return (NULL);
 	}
-	line = ft_set_line(*buffer);
-	*buffer = ft_trim_buffer(*buffer);
+	line = ft_set_line(buffer[fd]);
+	buffer[fd] = ft_trim_buffer(buffer[fd]);
 	return (line);
 }
