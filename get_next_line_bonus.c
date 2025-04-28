@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 static char	*ft_join_free(char *res, char *buff)
 {
@@ -18,6 +18,8 @@ static char	*ft_join_free(char *res, char *buff)
 
 	temp = ft_strjoin(res, buff);
 	free(res);
+	if (!temp)
+		return (NULL);
 	return (temp);
 }
 
@@ -41,7 +43,7 @@ static char	*ft_set_line(char *buffer)
 {
 	int	i;
 
-	if (!buffer)
+	if (!buffer || buffer[0] == '\0')
 		return (NULL);
 	i = 0;
 	while (buffer[i] && buffer[i] != '\n')
@@ -87,17 +89,14 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 	{
-		free(buffer[fd]);
+		if (buffer[fd])
+			free(buffer[fd]);
 		buffer[fd] = NULL;
 		return (NULL);
 	}
-	*buffer = ft_fill_line_buffer(fd, buffer[fd]);
+	buffer[fd] = ft_fill_line_buffer(fd, buffer[fd]);
 	if (!buffer[fd])
-	{
-		free(buffer[fd]);
-		buffer[fd] = NULL;
 		return (NULL);
-	}
 	line = ft_set_line(buffer[fd]);
 	buffer[fd] = ft_trim_buffer(buffer[fd]);
 	return (line);

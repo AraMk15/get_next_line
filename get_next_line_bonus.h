@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: armkrtch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/26 15:52:05 by armkrtch          #+#    #+#             */
-/*   Updated: 2025/04/26 15:52:29 by armkrtch         ###   ########.fr       */
+/*   Created: 2025/04/26 15:20:35 by armkrtch          #+#    #+#             */
+/*   Updated: 2025/04/27 19:15:46 by armkrtch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,16 @@
 #  define BUFFER_SIZE 42
 # endif
 
+# include <unistd.h>
+# include <stdio.h>
 # include <stdlib.h>
 # include <fcntl.h>
+
+typedef struct s_buff
+{
+	char	*buff;
+	ssize_t	read_size;
+}	t_buff;
 
 size_t	ft_strlen(const char *str);
 char	*ft_strchr(const char *str, int c);

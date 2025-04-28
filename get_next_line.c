@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: armkrtch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 15:53:11 by armkrtch          #+#    #+#             */
-/*   Updated: 2025/04/27 19:18:22 by armkrtch         ###   ########.fr       */
+/*   Updated: 2025/04/28 00:10:54 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static char	*ft_fill_line_buffer(int fd, char *str)
 		buff_data.buff[buff_data.read_size] = '\0';
 		str = ft_join_free(str, buff_data.buff);
 	}
-	return (str);
+	return (free(buff_data.buff), str);
 }
 
 char	*get_next_line(int fd)
