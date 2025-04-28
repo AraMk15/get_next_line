@@ -102,3 +102,23 @@ char	*get_next_line(int fd)
 	buffer = ft_trim_buffer(buffer);
 	return (line);
 }
+
+// int main(void)
+// {
+//     int fd = open("test1.txt", O_RDONLY);
+//     if (fd < 0)
+//     {
+//         perror("Failed to open file");
+//         return 1;
+//     }
+
+//     char *line;
+//     while ((line = get_next_line(fd)) != NULL)
+//     {
+//         printf("%s", line);
+// 		free(line);
+//     }
+
+//     close(fd);
+//     return 0;
+// }

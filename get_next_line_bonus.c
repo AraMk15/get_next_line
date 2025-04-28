@@ -101,3 +101,42 @@ char	*get_next_line(int fd)
 	buffer[fd] = ft_trim_buffer(buffer[fd]);
 	return (line);
 }
+
+int main(void)
+{
+    int fd1 = open("test1.txt", O_RDONLY);
+    int fd2 = open("test2.txt", O_RDONLY);
+
+    if (fd1 < 0 || fd2 < 0)
+    {
+        perror("Failed to open file(s)");
+        return 1;
+    }
+
+    char *line1 = NULL;
+    char *line2 = NULL;
+
+    while (1)
+    {
+        line1 = get_next_line(fd1);
+        if (line1)
+        {
+            printf("File1: %s", line1);
+            free(line1);
+        }
+
+        line2 = get_next_line(fd2);
+        if (line2)
+        {
+            printf("File2: %s", line2);
+            free(line2);
+        }
+
+        if (!line1 && !line2)
+            break;
+    }
+
+    close(fd1);
+    close(fd2);
+    return 0;
+}
