@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: armkrtch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/26 15:53:11 by armkrtch          #+#    #+#             */
-/*   Updated: 2025/04/28 00:10:54 by marvin           ###   ########.fr       */
+/*   Created: 2025/05/01 21:13:49 by armkrtch          #+#    #+#             */
+/*   Updated: 2025/05/01 21:13:55 by armkrtch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ char	*get_next_line(int fd)
 
 //     char *line;
 //     while ((line = get_next_line(fd)) != NULL)
-//     {
+//     {	
 //         printf("%s", line);
 // 		free(line);
 //     }

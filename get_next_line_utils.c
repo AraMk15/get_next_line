@@ -64,7 +64,7 @@ char	*ft_strndup(const char *s, size_t n)
 	char	*str;
 	size_t	i;
 
-	str = (char *)malloc(n + 2);
+	str = (char *)malloc(n + 1);
 	if (!str)
 		return (NULL);
 	i = 0;
